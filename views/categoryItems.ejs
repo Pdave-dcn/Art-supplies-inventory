@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+    <style>
+      /* Global Styles */
+      :root {
+        --primary-color: #4a6d8c;
+        --secondary-color: #f0f4f8;
+        --accent-color: #d4a373;
+        --text-color: #333;
+        --light-text: #666;
+        --border-radius: 8px;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        background-color: #f9f9f9;
+        color: var(--text-color);
+        line-height: 1.6;
+      }
+
+      main {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 40px 20px;
+      }
+
+      /* Item List Styling */
+      ul {
+        list-style-type: none;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+      }
+
+      li {
+        background-color: white;
+        border-radius: var(--border-radius);
+        padding: 20px;
+        padding-bottom: 60px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s, box-shadow 0.2s;
+        position: relative;
+      }
+
+      li:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+      }
+
+      /* Item Details Styling */
+      li::first-line {
+        font-weight: bold;
+        font-size: 1.2rem;
+        color: var(--primary-color);
+      }
+
+      /* Price Styling */
+      li:after {
+        content: "";
+        display: block;
+        margin: 8px 0;
+        height: 1px;
+        background-color: #eee;
+      }
+
+      /* Stock Quantity Indicator */
+      li .stock-indicator {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+      }
+
+      li .high-stock {
+        background-color: #4caf50;
+      }
+
+      li .medium-stock {
+        background-color: #ff9800;
+      }
+
+      li .low-stock {
+        background-color: #f44336;
+      }
+
+      /* Custom formatting for item details */
+      .item-name {
+        font-weight: bold;
+        font-size: 1.2rem;
+        color: var(--primary-color);
+        margin-bottom: 8px;
+        display: block;
+      }
+
+      .item-price {
+        font-size: 1.1rem;
+        color: #2c3e50;
+        margin-bottom: 5px;
+        font-weight: 600;
+      }
+
+      .item-stock {
+        font-size: 0.9rem;
+        color: var(--light-text);
+      }
+
+      /* Empty Category Message Styling */
+      .empty-category {
+        grid-column: 1 / -1; /* Span all columns */
+        text-align: center;
+        padding: 40px;
+        background-color: var(--secondary-color);
+        border: 2px dashed var(--accent-color);
+        color: var(--light-text);
+        font-size: 1.2rem;
+        border-radius: var(--border-radius);
+      }
+
+      /* Create Item Button */
+      .create-category-btn {
+        display: inline-block;
+        margin-top: 2rem;
+        padding: 12px 24px;
+        background-color: var(--accent-color);
+        color: white;
+        text-decoration: none;
+        border-radius: var(--border-radius);
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .create-category-btn:hover {
+        background-color: #c19365;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .create-category-btn:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Update Item Button */
+      .update-item-btn {
+        display: inline-block;
+        padding: 8px 16px;
+        margin-top: 15px;
+        background-color: var(--secondary-color);
+        color: var(--primary-color);
+        text-decoration: none;
+        border-radius: var(--border-radius);
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        border: 1px solid var(--primary-color);
+        position: absolute;
+        bottom: 15px;
+        left: 20px;
+      }
+
+      .update-item-btn:hover {
+        background-color: var(--primary-color);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .update-item-btn:active {
+        transform: translateY(0);
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <ul>
+        <% if (items.length === 0) { %>
+        <li class="empty-category">No items found in this category.</li>
+        <% } %> <% items.forEach(item => { %>
+        <li>
+          <span class="item-name"><%= item.name %></span>
+          <span class="item-price">$<%= item.price %></span>
+          <span class="item-stock"><%= item.stock_quantity %> in stock</span>
+
+          <% let stockClass = ""; if (item.stock_quantity > 20) { stockClass =
+          "high-stock"; } else if (item.stock_quantity > 5) { stockClass =
+          "medium-stock"; } else { stockClass = "low-stock"; } %>
+          <span class="stock-indicator <%= stockClass %>"></span>
+          <a href="//<%= item.id %>" class="update-item-btn">Update Item</a>
+        </li>
+        <% }) %>
+      </ul>
+      <a href="/createItems/<%= categoryId %>" class="create-category-btn"
+        >Create New Item</a
+      >
+      <a href="/" class="create-category-btn">Back to Categories</a>
+    </main>
+  </body>
+</html>
