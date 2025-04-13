@@ -232,7 +232,9 @@
           "high-stock"; } else if (item.stock_quantity > 5) { stockClass =
           "medium-stock"; } else { stockClass = "low-stock"; } %>
           <span class="stock-indicator <%= stockClass %>"></span>
-          <a href="//<%= item.id %>" class="update-item-btn">Update Item</a>
+          <a href="/items/update/<%= item.id %>" class="update-item-btn"
+            >Update Item</a
+          >
           <a
             href="/items/delete/<%= categoryId %>/<%= item.id %>"
             class="delete-item-btn"
