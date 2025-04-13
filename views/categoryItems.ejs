@@ -172,6 +172,8 @@
         position: absolute;
         bottom: 15px;
         left: 20px;
+        right: auto;
+        width: auto;
       }
 
       .update-item-btn:hover {
@@ -182,6 +184,35 @@
       }
 
       .update-item-btn:active {
+        transform: translateY(0);
+      }
+
+      /* Delete Item Button */
+      .delete-item-btn {
+        display: inline-block;
+        padding: 8px 16px;
+        background-color: #fff;
+        color: #dc3545;
+        text-decoration: none;
+        border-radius: var(--border-radius);
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        border: 1px solid #dc3545;
+        position: absolute;
+        bottom: 15px;
+        right: 20px;
+      }
+
+      .delete-item-btn:hover {
+        background-color: #dc3545;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .delete-item-btn:active {
         transform: translateY(0);
       }
     </style>
@@ -202,6 +233,11 @@
           "medium-stock"; } else { stockClass = "low-stock"; } %>
           <span class="stock-indicator <%= stockClass %>"></span>
           <a href="//<%= item.id %>" class="update-item-btn">Update Item</a>
+          <a
+            href="/items/delete/<%= categoryId %>/<%= item.id %>"
+            class="delete-item-btn"
+            >Delete Item</a
+          >
         </li>
         <% }) %>
       </ul>

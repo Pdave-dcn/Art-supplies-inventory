@@ -122,3 +122,49 @@ exports.updateItemPost = async (req, res) => {
     res.status(500).send("Server error");
   }
 };
+
+exports.deleteItemGet = async (req, res) => {
+  try {
+    const itemId = parseInt(req.params.itemId, 10);
+    const categoryId = parseInt(req.params.categoryId, 10);
+    if (isNaN(itemId)) {
+      return res.status(400).send("Invalid item ID");
+    }
+    if (isNaN(categoryId)) {
+      return res.status(400).send("Invalid category ID");
+    }
+
+    const item = await db.selectSingleItem(itemId);
+    if (!item) {
+      return res.status(404).send("Item not found");
+    }
+
+    await db.deleteItem(itemId);
+
+    res.redirect(`/categories/${categoryId}`);
+  } catch (error) {
+    console.error("Error in deleteItemGet:", error);
+    res.status(500).send("Server error");
+  }
+};
+
+exports.deleteCategoryGet = async (req, res) => {
+  try {
+    const categoryId = parseInt(req.params.categoryId, 10);
+    if (isNaN(categoryId)) {
+      return res.status(400).send("Invalid category ID");
+    }
+
+    const category = await db.selectSingleCategory(categoryId);
+    if (!category) {
+      return res.status(404).send("Category not found");
+    }
+
+    await db.deleteCategory(categoryId);
+
+    res.redirect("/");
+  } catch (error) {
+    console.error("Error in deleteCategoryGet:", error);
+    res.status(500).send("Server error");
+  }
+};

@@ -72,3 +72,37 @@ exports.updateItem = async (itemId, name, price, quantity) => {
     throw new Error("Item not found");
   }
 };
+
+exports.deleteItem = async (itemId) => {
+  if (isNaN(itemId)) {
+    throw new Error("Invalid item ID");
+  }
+
+  const result = await pool.query(
+    "DELETE FROM items WHERE id = $1 RETURNING *",
+    [itemId]
+  );
+
+  if (result.rowCount === 0) {
+    throw new Error("Item not found");
+  }
+};
+
+exports.deleteCategory = async (categoryId) => {
+  if (isNaN(categoryId)) {
+    throw new Error("Invalid category ID");
+  }
+
+  await pool.query("DELETE FROM items WHERE category_id = $1", [categoryId]);
+
+  const result = await pool.query(
+    "DELETE FROM categories WHERE id = $1 RETURNING *",
+    [categoryId]
+  );
+
+  if (result.rowCount === 0) {
+    throw new Error("Category not found");
+  }
+
+  return result.rows[0];
+};

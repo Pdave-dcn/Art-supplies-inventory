@@ -80,6 +80,7 @@
 
       .category-content {
         padding: 20px 20px 60px 20px;
+        min-height: 150px; /* Ensures space for content and buttons */
       }
 
       .category-link {
@@ -111,6 +112,8 @@
         right: 20px;
         display: flex;
         justify-content: flex-start;
+        gap: 10px;
+        align-items: center;
       }
 
       /* Create Category Button */
@@ -140,15 +143,15 @@
 
       /* Update Category Button */
       .update-category-btn {
-        display: flex;
+        display: inline-flex;
         align-items: center;
         gap: 5px;
         padding: 8px 16px;
-        font-size: 0.9rem;
         background-color: var(--secondary-color);
         color: var(--primary-color);
         text-decoration: none;
         border-radius: var(--border-radius);
+        font-size: 0.9rem;
         font-weight: 600;
         cursor: pointer;
         transition: all 0.2s ease;
@@ -167,6 +170,34 @@
 
       .edit-icon {
         font-size: 1rem;
+      }
+
+      /* Delete Category Button */
+      .delete-category-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 8px 16px;
+        background-color: #fff;
+        color: #dc3545;
+        text-decoration: none;
+        border-radius: var(--border-radius);
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        border: 1px solid #dc3545;
+      }
+
+      .delete-category-btn:hover {
+        background-color: #dc3545;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .delete-category-btn:active {
+        transform: translateY(0);
       }
 
       /* Responsive Design */
@@ -207,6 +238,11 @@
             >
               <i class="edit-icon">✏️</i> Edit
             </a>
+            <a
+              href="/categories/delete/<%= category.id %>"
+              class="delete-category-btn"
+              >Delete Category</a
+            >
           </div>
         </li>
         <% }) %>

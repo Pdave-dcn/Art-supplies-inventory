@@ -15,4 +15,13 @@ router.get(
 router.post("/categories/update", inventoryControllers.updateCategoryPost);
 router.get("/items/update/:itemId", inventoryControllers.updateItemGet);
 router.post("/items/update", inventoryControllers.updateItemPost);
+router.get(
+  "/items/delete/:categoryId/:itemId",
+  inventoryControllers.deleteItemGet
+);
+router.get(
+  "/categories/delete/:categoryId",
+  inventoryControllers.deleteCategoryGet
+);
+
 module.exports = router;
